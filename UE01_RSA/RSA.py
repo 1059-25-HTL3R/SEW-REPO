@@ -1,8 +1,15 @@
 import doctest
+from sympy import randprime
 
 
-
-
+def generate_keys(number_of_bits):
+    halfbits = number_of_bits / 2 
+    q = randprime(pow(2,halfbits -1), pow(2,halfbits))
+    p = randprime(pow(2,halfbits -1), pow(2,halfbits))
+    while (q == p):
+        p = randprime(pow(2,halfbits -1), pow(2,halfbits))
+    
+    n = p * q
 
 
 
