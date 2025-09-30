@@ -10,7 +10,8 @@ def generate_keys(number_of_bits):
         p = randprime(pow(2,halfbits -1), pow(2,halfbits))
     
     n = p * q
-
+    phi = (p-1)*(q-1)
+    e = get_e(phi)
 
 
 #stack overflow: (LINK)[https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python]
@@ -59,4 +60,16 @@ def powcustom(base, exponent, modulo)-> int:
         half = powcustom(base, (exponent-1) // 2, modulo)
         return (half * half * base) % modulo
 
+
+def get_e(phi):
+    # nach angaben aus diesem viedeo https://www.youtube.com/watch?v=X2yDcLE77To ist 65537 Standartwert für e
+    e = 65537
+    # e muss -> 1 < e < phi(N) und ggt(e und phi(N) ) muss 1 sein
+    if math.gcd(e, phi) == 1:
+        return e
+
+    #fallback falls sich ergibt das 65537 nicht funkt
+    for e in range(3, phi, 2):
+        if math.gcd(e, phi) == 1:
+            return e
 doctest.testmod()
